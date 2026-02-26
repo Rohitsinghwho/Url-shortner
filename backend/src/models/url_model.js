@@ -8,7 +8,7 @@ export const createUrl=async (original_url)=>{
     `;
     const values=[original_url];
     const result=await pool.query(query,values);
-    return result.rows[0].id;
+    return result.rows[0].id||null;
 }
 
 
@@ -19,7 +19,7 @@ export const getUrlByShortId=async(shortId)=>{
     WHERE id=$1;
     `;
     const result=await pool.query(query,[shortId]);
-    return result.rows[0];
+    return result.rows[0]||null;
 }
 
 export const CheckExistingUrl=async(Url)=>{
@@ -28,7 +28,7 @@ export const CheckExistingUrl=async(Url)=>{
     WHERE original_url=$1;
     `;
     const result=await pool.query(query,[Url]);
-    return [result.rows[0],result.rowCount];
+    return [result.rows[0],result.rowCount]||null;
     // return result.rows[0]
 }
 
@@ -39,7 +39,7 @@ export const getUrlByID=async(Id)=>{
     `;
     const result=await pool.query(query,[Id]);
     // console.log("Rows Updated:", result.rowCount);
-    return result.rows[0];
+    return result.rows[0]||null;
 }
 
 export const UpdateWithShortCode=async(shortIdCode,id)=>{
@@ -48,6 +48,6 @@ export const UpdateWithShortCode=async(shortIdCode,id)=>{
     WHERE id=$2;
     `;
     const result=await pool.query(query,[shortIdCode,id]);
-    return result.rows[0];
+    return result.rows[0]||null;
 }
 

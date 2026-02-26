@@ -3,13 +3,22 @@ import dotenv from "dotenv"
 
 dotenv.config();
 
+const redisUrl = process.env.NODE_ENV === 'test' 
+  ? 'redis://localhost:6379'           // Tests: local Redis
+  : process.env.REDIS_URL || 'redis://localhost:6379'; 
+
 const client=createClient({
-    url:process.env.REDIS_URL||'redis://localhost:6369',
+    url:redisUrl,
     socket: {
-        connectTimeout: 5000,
+        connectTimeout: 10000,
         reconnectStrategy: (retries) => Math.min(retries * 100, 2000),
   },
 });
+if (process.env.NODE_ENV !== 'test') {
+  client.connect().catch(err => {
+    console.log('Redis unavailable - continuing without cache');
+  });
+}
 
 client.on('error',err=>console.log('Redis client error',err));
 client.on('connect', () => console.log('Redis connecting'));

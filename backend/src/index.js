@@ -5,7 +5,7 @@ import urlRoutes from "./routes/url_routes.js"
 import { connectRedis,disconnectRedis } from "./config/cache.js";
 // required for configuring the envirnoment variables(Senstive variables)
 const app = express();
-
+export {app};
 // required for parsing the json files
 app.use(express.json());
 app.use("/",urlRoutes)
@@ -19,11 +19,11 @@ process.on('SIGTERM', async () => {
   process.exit(0);
 });
 
-
+let server;
 async function startServer() {
   try {
     await connectRedis();
-    app.listen(process.env.PORT, () => {
+    server=app.listen(process.env.PORT, () => {
       // console.log( typeof process.env.DB_PASSWORD)
       console.log(`Server is listening on PORT ${process.env.PORT}`);
     });
@@ -32,5 +32,7 @@ async function startServer() {
     process.exit(1);
   }
 }
+export {server}
 
 startServer();
+

@@ -1,6 +1,7 @@
 import {CheckExistingUrl,getUrlByID,createUrl,UpdateWithShortCode,getUrlByShortId} from "../models/url_model.js";
 import {encodeBase62,decodeBase62} from "../utils/hashFunc.js";
 import client from "../config/cache.js";
+import { isValidShortCode } from "../utils/isValidShortC.js";
 
 
 // for getting the long url and converting to short_url
@@ -16,7 +17,7 @@ export const getLongUrl=async(req,res)=>
     try {
         const originalUrl=req.body.originalUrl;
         if(!originalUrl){
-            return res.status(400).json({message:"Original Url is requried"});
+            return res.status(400).json({message:"Original Url is required"});
         }
     
         // Basic Url Validations
@@ -42,7 +43,7 @@ export const getLongUrl=async(req,res)=>
         // Update Record with short Url
         const UpdateRecord= await UpdateWithShortCode(shortIdCode,ID);
         // console.log("Updated recoreds: ",UpdateRecord);
-        await client.set(shortIdCode,originalUrl,{
+        await client.set(`url:${shortIdCode}`,originalUrl,{
             EX: 86400 * 30 
         })
         res.status(200).json({
@@ -57,15 +58,21 @@ export const getLongUrl=async(req,res)=>
 }
 
 
+
 export const RedirectUser=async (req,res)=>{
     // receive shortcode in params
     const {shortCode}=req.params;
     let originalUrl;
     try {
-        if (!shortCode) {
-           return res.status(400).json({ message: "Short code is required" });
+        if (shortCode === undefined || shortCode === null || shortCode === '') {
+           return res.status(404).json({ message:"Short code is required" });
        }
-        originalUrl=await client.get(shortCode);
+       
+       if(!isValidShortCode(shortCode)){
+            return res.status(400).json({message:"Invalid short code format"});
+       }
+       
+        originalUrl=await client.get(`url:${shortCode}`);
         if(originalUrl){
             return res.redirect(301, originalUrl);
         }
