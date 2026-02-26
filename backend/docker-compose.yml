@@ -19,7 +19,7 @@ services:
     image: redis:7-alpine
     container_name: url_shortner_redis
     ports:
-      - "${REDIS_PORT}:6397"
+      - "${REDIS_PORT}:6379"
     volumes:
       - redis_data:/data
     healthcheck:

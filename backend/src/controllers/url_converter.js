@@ -1,5 +1,7 @@
 import {CheckExistingUrl,getUrlByID,createUrl,UpdateWithShortCode,getUrlByShortId} from "../models/url_model.js";
 import {encodeBase62,decodeBase62} from "../utils/hashFunc.js";
+import client from "../config/cache.js";
+
 
 // for getting the long url and converting to short_url
 /**
@@ -40,6 +42,9 @@ export const getLongUrl=async(req,res)=>
         // Update Record with short Url
         const UpdateRecord= await UpdateWithShortCode(shortIdCode,ID);
         // console.log("Updated recoreds: ",UpdateRecord);
+        await client.set(shortIdCode,originalUrl,{
+            EX: 86400 * 30 
+        })
         res.status(200).json({
             message:"Url Creation Success!",
             shortUrl:`${process.env.BASE_URL}/${shortIdCode}`
@@ -53,22 +58,33 @@ export const getLongUrl=async(req,res)=>
 
 
 export const RedirectUser=async (req,res)=>{
+    // receive shortcode in params
+    const {shortCode}=req.params;
+    let originalUrl;
     try {
-        // receive shortcode in params
-        const {shortCode}=req.params;
-
-         if (!shortCode) {
-            return res.status(400).json({ message: "Short code is required" });
+        if (!shortCode) {
+           return res.status(400).json({ message: "Short code is required" });
+       }
+        originalUrl=await client.get(shortCode);
+        if(originalUrl){
+            return res.redirect(301, originalUrl);
+        }
+           // 2. SLOW: Postgres lookup via ID
+        const decodedId = decodeBase62(shortCode);
+        const result = await getUrlByID(decodedId);
+        
+        if (!result || !result.original_url) {
+            return res.status(404).json({ message: "URL not found" });
         }
 
-        const decodedId=decodeBase62(shortCode);
-        const result=await getUrlByID(decodedId);
+        originalUrl = result.original_url;
+        
+        // 3. Cache MISS → Populate Redis for next request
+        await client.set(shortCode, originalUrl, { EX: 86400 * 30 }); // 30 days
+        return res.redirect(301, originalUrl);
 
-
-        const originalUrl=result.original_url;
-        return res.redirect(originalUrl);
     } catch (error) {
-        console.log(error)
-        res.status(500).json({message:"Internal Server Error"})
+        console.error('Redirect error:', error);
+        res.status(500).json({ message: "Internal Server Error" });
     }
 }
