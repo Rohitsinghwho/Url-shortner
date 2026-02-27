@@ -1,46 +1,47 @@
-
-# PROJECT TITLE :-
 # URL SHORTNER FULL STACK WEB PROJECT
 
+## TABLE OF CONTENT
+1. [Introduction](#introduction)
+2. [Features](#features)
 
-## DESCRIPTION :-
+## Introduction 
 This is a Full-Stack service which is used to convert a long URL into a short URL. The puprose of this project is to return the user with a minimal URL string which can be shared anywhere with ease.
 
 A user can convert any long form URL into a shorter version using this service.
 
-## FEATURES :-
+## Features 
 
--   Creates a short URL from a long URL.
+-   Creates lightning fast short URL from a long URL .
 -   Redirect to original URL when short URL is visited.
 -   Basic Validation and Error handling.
 -   Click tracking.
 
 
-## TECH STACK :-
+## TECH STACK 
 -   Programming language :  JavaScript.
 -   Framework : Express.
 -   FrontEnd Library :  React.js.
 -   Databse :  PostgreSQL.
 -   Testing :  Jest, Supertest.
--   Othe tools  :  Redis, Docker, Babel, git.
+-   Othe tools  :  Redis, Docker, Babel, git, vite, axios.
 
 
-## PROJECT STRUCTURE :-
+## PROJECT STRUCTURE 
 -   frontend/ - Frontend code(React Components,pages).
 -   backend/ -  Backend APIs,contollers,models,routes.
 -   backend/config - DB config, cache config.
 -   README.md - Project documentation.
 
-## INSTALLATION :-
+## INSTALLATION 
 
 This project uses Docker for both frontend and backend services. Make sure you have Docker and Docker Compose installed.
 
-## PREREQUISITES :-
+## PREREQUISITES 
 -   Docker Engine 20+ and Docker Compose v2+.
 -   Git.
 -   Node - latest.
 
-## QUICK START (RECOMMENDED)
+## QUICK START (RECOMMENDED) 
 ```
     /** #1 Clone the repo */
 
@@ -49,7 +50,7 @@ This project uses Docker for both frontend and backend services. Make sure you h
 
 ```
 
-## Evironemt variable setup :-
+## Evironment variable setup 
 
 ```
     cd backend
@@ -82,7 +83,7 @@ Inside frontend .env file write these variables.
 
 ## Docker build 
 
-From root move:-
+From root move:-    
 ```
     cd backend
     docker-compose build --no-cache
@@ -108,8 +109,36 @@ If build successfull then:-
 
 ### Hurrary 🔥 you have successfully installed the project.
 
+## API DOCUMENTATION
 
+- ## POST - /shorten
+    -   Used to Shorten the Long Url into Shorter One.
+    -   Expects a Long Url as Json Object.
+    -   Returns a Short Url with message : success.
+
+- ## GET - /:shortCode
+    -   Used to Redirect a visitor to the Original Url.
+    -   Expects a ShortCode as a params generted during /shorten call.
+    -   Returns a WebPage associated with ShortCode.
+
+
+
+## Docker Guide
+
+Docker is a tool which helps us in isolating our application 
+
+
+
+
+
+
+
+
+<br>
+<br>
+<br>
+<br>
 <div align="center">
-    **🔥🚗 URL Shortener** | Built with ❤️ using Docker + Nodejs + Postgre + Redis 🚀**
+    ** 🔥🚗 URL Shortener| Built with ❤️ using Docker + Nodejs + Postgre + Redis 🚀 **
 
 </div>
