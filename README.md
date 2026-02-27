@@ -3,6 +3,13 @@
 ## TABLE OF CONTENT
 1. [Introduction](#introduction)
 2. [Features](#features)
+3. [Tech Stack](#tech-stack)
+4. [Project Stucture](#project-structure)
+5. [Installation](#installation)
+6. [API Documentation](#api-documentation)
+7. [Docker Guide](#docker-guide)
+
+
 
 ## Introduction 
 This is a Full-Stack service which is used to convert a long URL into a short URL. The puprose of this project is to return the user with a minimal URL string which can be shared anywhere with ease.
