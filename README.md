@@ -8,8 +8,11 @@
 5. [Installation](#installation)
 6. [API Documentation](#api-documentation)
 7. [Docker Guide](#docker-guide)
-
-
+    1.  [DockerFile Overview](#dockerfile-overview)
+    2.  [Docker-compose](#docker-compose)
+    3.  [Multi-stage build](#multi-stage-build)
+8. [Testing](#testing)
+    1. [Unit Testing](#unit-testing)
 
 ## Introduction 
 This is a Full-Stack service which is used to convert a long URL into a short URL. The puprose of this project is to return the user with a minimal URL string which can be shared anywhere with ease.
@@ -30,7 +33,7 @@ A user can convert any long form URL into a shorter version using this service.
 -   FrontEnd Library :  React.js.
 -   Databse :  PostgreSQL.
 -   Testing :  Jest, Supertest.
--   Othe tools  :  Redis, Docker, Babel, git, vite, axios.
+-   Othe tools  :  Redis, Docker, Babel, git, vite, axios, tailwindcss.
 
 
 ## PROJECT STRUCTURE 
@@ -132,7 +135,32 @@ If build successfull then:-
 
 ## Docker Guide
 
-Docker is a tool which helps us in isolating our application 
+Docker is a softwere platform that lets us run, build and deploy code with ease. Docker packages softwere into a standardrized units called [containers](https://aws.amazon.com/containers/) that have everything a softwere needs to run including libraries, system tools and runtime.
+
+Basically docker lets us use the same configuration which is on the host machine where docker container is initialized on all the other machines running the specific docker container.
+
+-   ## DockerFile Overview
+    A DockerFile is a simple text file with no extension that acts as a blueprint for building Docker [images](https://docs.docker.com/get-started/docker-concepts/the-basics/what-is-an-image/) automatically.Docker reads its instructions line-by-line to create a layered, reproducible images container your app, [dependencies](https://askubuntu.com/questions/361741/what-are-dependencies), and [runtime environment](https://www.geeksforgeeks.org/compiler-design/runtime-environments-in-compiler-design/).
+
+-   ## Docker-Compose
+    Docker compose lets us define all of our containers and their configurations in single YAML file. If we include this in our project then anyone that clones our repository can get up and run the docker containers with a single command.
+
+-   ## Multi-stage build
+    In a traditional build, all build instructions are executed in sequence, and in a single build container: downloading dependencies, compiling code, and packaging the application. All those layers end up in your final image. This approach works, but it leads to bulky images carrying unnecessary weight and increasing your security risks. This is where multi-stage builds come in.
+
+    Multi-stage builds introduce multiple stages in your Dockerfile, each with a specific purpose. Think of it like the ability to run different parts of a build in multiple different environments, concurrently. By separating the build environment from the final runtime environment, you can significantly reduce the image size and attack surface. This is especially beneficial for applications with large build dependencies.
+
+## Testing
+
+-   ### Unit Testing
+    ```
+    #Backend
+    cd backend && npm test
+
+    #Frontend
+    cd frontend && npm test
+    ```
+
 
 
 
