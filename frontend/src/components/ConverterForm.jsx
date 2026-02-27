@@ -1,10 +1,15 @@
 import React from 'react'
+import { RiTelegram2Fill } from "react-icons/ri";
 
 const ConverterForm = () => {
   return (
     <div className='m-5 shadow shadow-olive-500 rounded-xl p-2'>
         <form className='flex flex-col p-5 gap-3'>
-            <label className='text-xl font-semibold'>Long URL <span className='text-red-600'>*</span></label>
+            <label className='text-xl font-semibold flex items-center gap-1'>
+                <RiTelegram2Fill />
+                Long URL 
+                <span className='text-red-600'>*</span>
+                </label>
             <input className='border text-md p-2 rounded-md' type='text'/>
 
             <input className='border text-md p-2 rounded-md' type='text' disabled/>
