@@ -1,11 +1,8 @@
 services:
   frontend:
     build: .
-    container_name: url-shortner-frontend-vite
+    container_name: url-shortner-frontend-prod
     ports:
-      - "5173:5173"
-    volumes:
-      - ./src:/app/src
+      - "80:80"
     environment:
-      - VITE_HOST=0.0.0.0
-    command: npm run dev -- --host
+      - NODE_ENV=production

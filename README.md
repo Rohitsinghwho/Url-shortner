@@ -93,29 +93,38 @@ Inside frontend .env file write these variables.
 
 ## Docker build 
 
-From root move:-    
-```
+From root move:-   
+
+    ```
     cd backend
     docker-compose build --no-cache
-```
+    ```
 
 If build successfull then:-
-```
+
+    ```
     docker compose up -d (For spining all container up).
     docker compose down (For stopping all container).
-```
+    ```
 
 Now for frontend:-
-```
+    ```
     cd frontend
-    docker-compose build --no-cache
-```
+    ```
 
-If build successfull then:-
-```
+-   Development build and up
+    ```
+    docker compose -f docker-compose.dev.yml up --build
+    docker compose -f docker-compose.dev.yml up
+    ```
+-   Production build and up
+    ```
+    docker compose build
     docker compose up -d
-    docker compose down
-```
+
+    ```
+
+
 
 ### Hurrary 🔥 you have successfully installed the project.
 
