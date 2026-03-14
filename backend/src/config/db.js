@@ -14,6 +14,7 @@ const pool = new Pool({
   maxLifetimeSeconds: 60,
 });
 
+console.log(process.env.DB_HOST);
 pool.on("connect", () => {
   console.log("Connected to PostgreSQL");
 });
