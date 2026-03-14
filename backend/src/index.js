@@ -13,7 +13,7 @@ app.use(cors({
   origin: process.env.CORS_ORIGIN || 'https://url-shortner-black-seven.vercel.app',
   credentials:true
 }))
-app.options('*', cors())
+
 
 app.use(express.json());
 app.use("/",urlRoutes)
