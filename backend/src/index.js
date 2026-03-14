@@ -10,7 +10,7 @@ const app = express();
 export {app};
 // required for parsing the json files
 app.use(cors({
-  origin: process.env.CORS_ORIGIN || 'http://localhost:5173',
+  origin: process.env.CORS_ORIGIN || 'https://url-shortner-black-seven.vercel.app',
   credentials:true
 }))
 app.use(express.json());
