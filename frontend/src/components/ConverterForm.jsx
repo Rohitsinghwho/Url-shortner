@@ -13,7 +13,7 @@ const ConverterForm = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await axios.post("http://localhost:5000/shorten", {
+      const response = await axios.post("https://passionate-insight-production-ade3.up.railway.app/shorten", {
         originalUrl: LongUrl,
       });
 
@@ -27,7 +27,7 @@ const ConverterForm = () => {
     }
   };
   return (
-    <div className="m-5 shadow shadow-olive-500 rounded-xl p-2">
+    <div className="m-5 shadow shadow-olive-500 rounded-xl p-2 md:flex-2 ">
       <form className="flex flex-col p-5 gap-3" onSubmit={handleFormSubmit}>
         <label className="text-xl font-semibold flex items-center gap-1">
           <RiTelegram2Fill />

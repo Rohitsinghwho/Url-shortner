@@ -24,8 +24,8 @@ const RecentLinks = () => {
                     <div className='flex items-center justify-center p-5'>img</div>
                     <div className='flex flex-col flex-1 py-2 px-1'>
                         <div className='flex flex-col'>
-                            <span className='text-md font-semibold text-blue-500'><a href={val.shortUrl} target='_blank'>{val.shortUrl}</a></span>
-                            <span className='text-xs text-gray-500'>{val.longUrl}</span>
+                            <span className='text-md font-semibold text-blue-500'><a href={val.shortUrl} target='_blank'>{val.shortUrl.length>50?val.shortUrl.slice(0,20)+'....':val.shortUrl}</a></span>
+                            <span className='text-xs text-gray-500'>{val.longUrl.length>50?val.longUrl.slice(0,30)+'....':val.longUrl}</span>
                         </div>
                         <button onClick={()=>copyToClipboard(val.shortUrl)} className="border border-amber-200 text-md bg-blue-600 p-2 text-white rounded-md hover:bg-blue-400 cursor-pointer">Copy</button>
                     </div>

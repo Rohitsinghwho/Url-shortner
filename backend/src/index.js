@@ -10,7 +10,7 @@ const app = express();
 export {app};
 // required for parsing the json files
 app.use(cors({
-  origin:'http://localhost:5173',
+  origin: process.env.CORS_ORIGIN || 'http://localhost:5173',
   credentials:true
 }))
 app.use(express.json());
@@ -41,4 +41,3 @@ async function startServer() {
 export {server}
 
 startServer();
-

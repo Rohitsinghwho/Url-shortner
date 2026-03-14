@@ -2,7 +2,7 @@ import React from "react";
 
 const Hero = () => {
   return (
-    <div className="p-8 flex flex-col gap-5">
+    <div className="p-8 flex flex-col gap-5 md:flex-2">
       <div className="flex flex-col gap-3">
         <h2 className="text-2xl font-bold">
           URL Shortner, Branded Short Links & Analytics

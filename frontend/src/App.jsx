@@ -9,8 +9,10 @@ const App = () => {
   return (
     <div>
       <NavBar/>
+      <div className='md:flex'>
       <Hero/>
       <ConverterForm/>
+      </div>
       <RecentLinks/>
       <Footer/>
     </div>
