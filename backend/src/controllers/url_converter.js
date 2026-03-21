@@ -72,10 +72,15 @@ export const RedirectUser=async (req,res)=>{
             return res.status(400).json({message:"Invalid short code format"});
        }
        
+        await client.incr(`hits:total:${shortCode}`); // Increment access count for analytics
         originalUrl=await client.get(`url:${shortCode}`);
         if(originalUrl){
+            await client.incr(`hits:cache:${shortCode}`); // Increment cache hit count for analytics
             return res.redirect(301, originalUrl);
-        }
+        } 
+
+        // cache miss going to db
+        await client.incr(`hits:db:${shortCode}`); // Increment DB hit count for analytics
            // 2. SLOW: Postgres lookup via ID
         const decodedId = decodeBase62(shortCode);
         const result = await getUrlByID(decodedId);
@@ -87,7 +92,7 @@ export const RedirectUser=async (req,res)=>{
         originalUrl = result.original_url;
         
         // 3. Cache MISS → Populate Redis for next request
-        await client.set(shortCode, originalUrl, { EX: 86400 * 30 }); // 30 days
+        await client.set(`url:${shortCode}`, originalUrl, { EX: 86400 * 30 });
         return res.redirect(301, originalUrl);
 
     } catch (error) {

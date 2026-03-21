@@ -3,6 +3,7 @@ dotenv.config();
 import express from "express";
 import cors from 'cors'
 import urlRoutes from "./routes/url_routes.js"
+import statRoute from "./routes/stats_routes.js"
 import { connectRedis,disconnectRedis } from "./config/cache.js";
 // required for configuring the envirnoment variables(Senstive variables)
 const app = express();
@@ -17,6 +18,7 @@ app.use(cors({
 
 app.use(express.json());
 app.use("/",urlRoutes)
+app.use("/analytics",statRoute)
 // configure the server
 
 
